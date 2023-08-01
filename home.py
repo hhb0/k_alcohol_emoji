@@ -64,11 +64,11 @@ with container:
 @st.cache_resource(show_spinner=None)
 def load_data():
     feature_df = pd.read_csv("./data/feature_total_f.csv", encoding="utf-8")
-    main_df = pd.read_csv("./data/main_total_no_features_F.csv", encoding="utf-8")
-    ingredient_df = pd.read_csv("./data/ingredient_total_id_F.csv", encoding="utf-8")
+    main_df = pd.read_csv("./data/main_total_no_features_f.csv", encoding="utf-8")
+    ingredient_df = pd.read_csv("./data/ingredient_total_id_f.csv", encoding="utf-8")
     embedding_df = pd.read_csv("./data/embedding_f.csv", encoding="utf-8")
     emoji_df = pd.read_csv("./data/emoji_selected_f.csv", encoding="utf-8")
-    food_df = pd.read_csv("./data/food_preprocessed_F.csv", encoding="utf-8-sig")
+    food_df = pd.read_csv("./data/food_preprocessed_f.csv", encoding="utf-8-sig")
     return feature_df, main_df, ingredient_df, embedding_df, emoji_df, food_df
 
 feature_df, main_df, ingredient_df, embedding_df, emoji_df, food_df = load_data()
