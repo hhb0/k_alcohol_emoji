@@ -54,7 +54,7 @@ def local_css(file_name):
 
 container = st.container()
 with container:
-    empty1, con1, empty2 = st.columns([0.3, 1.0, 0.3])
+    empty1, con1, empty2 = st.columns(3)
     with empty1:
         st.empty()
 
