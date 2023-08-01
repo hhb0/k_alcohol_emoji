@@ -134,7 +134,7 @@ def generate_prompt(name, feature, situation_keyword, emotion_keyword):
 
 @st.cache_resource(show_spinner=None)
 def request_chat_completion(prompt):
-    streaming_response = openai.ChatCompletion.create(
+    response = openai.ChatCompletion.create(
     model="gpt-3.5-turbo-0613",
     messages=[
         {"role": "system", "content": "당신은 유능한 홍보 전문가입니다."},
