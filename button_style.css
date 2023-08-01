@@ -9,11 +9,11 @@ body {
     background-color: #E8AB1F;
     box-sizing: 3%;
     height: 0.5em;
-    width: 3em;
+    width: 2em;
     font-size:100px;
     font-weight: bold;
     border-radius: 10px;
-    padding: 10px;
+    padding: 5px;
 }
 
 .stTextInput>div>div>input {
