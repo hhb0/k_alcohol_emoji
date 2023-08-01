@@ -112,6 +112,7 @@ def embedding_from_string(
 @st.cache_resource(show_spinner=None)
 def generate_prompt(name, feature, situation_keyword, emotion_keyword):
     prompt = f"""
+전통주 이름은 변경하지마세요.
 제시된 전통주의 특징에 상황 키워드를 넣어서 자연스럽게 소개해 주세요.
 전통주의 특징을 패러프레이징하는 형태로 작성해 주세요.
 공백을 포함하여 200자 미만으로 작성해 주세요.
