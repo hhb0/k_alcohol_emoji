@@ -1,6 +1,7 @@
 body {
     color: #E8AB1F;
     background-color: #E8AB1F;
+    font-weight: bold;
     /* font-size: 70px; */
 }
 
@@ -9,8 +10,8 @@ body {
     background-color: #E8AB1F;
     box-sizing: 3%;
     height: 1em;
-    width: 4em;
-    font-size:70px;
+    width: 3em;
+    font-size:80px;
     font-weight: bold;
     border-radius: 10px;
     padding: 10px;
@@ -25,10 +26,12 @@ body {
 .fullScreenFrame > div {
     display: flex;
     justify-content: center;
+    font-weight: bold;
 }
 
 .center {
     display: block;
     margin-left: auto;
     margin-right: auto;
+    font-weight: bold;
   }
