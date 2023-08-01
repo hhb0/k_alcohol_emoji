@@ -1,3 +1,5 @@
+from typing import List, Generator
+
 import streamlit as st
 st.set_page_config(
     page_title="k_tranditional_drink",
@@ -127,7 +129,7 @@ def generate_prompt(name, feature, situation_keyword, emotion_keyword):
 감정 키워드: {emotion_keyword}
 ---
 """
-    return prompt.strip()
+    return prompt
 
 @st.cache_resource(show_spinner=None)
 def request_chat_completion(prompt):
