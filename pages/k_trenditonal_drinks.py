@@ -27,16 +27,113 @@ import os
 openai.api_key = st.secrets.OPENAI_TOKEN
 from supabase import create_client
 import pickle
-from openai.embeddings_utils import (
-    get_embedding,
-    distances_from_embeddings,
-    tsne_components_from_embeddings,
+from sklearn.metrics.pairwise import cosine_similarity
+from sklearn.decomposition import PCA
+from streamlit_extras.switch_page_button import switch_page
+
+st.subheader("🍶", anchor="k_alcohol")
+empty1, con1, empty2 = st.columns([0.3, 1.0, 0.3])
+with empty1:
+    st.empty()
+with con1:
+    st.image("./f_image/title_03.png")
+    want_to_contribute = st.button("황금 카드를 뽑았다면?!🏠")
+    if want_to_contribute:
+        switch_page("home")
+with empty2:
+    st.empty()
+
+@st.cache_resource(show_spinner=None)
+def init_connection():
+    url = st.secrets["SUPABASE_URL"]
+    key = st.secrets["SUPABASE_KEY"]
+    return create_client(url, key)
+
+supabase_client = init_connection()
+
+EMBEDDING_MODEL = "text-embedding-ada-002"
+
+
+#STEP 2) 데이터 로드
+@st.cache_resource(show_spinner=None, experimental_allow_widgets=True)
+def load_data():
+    feature_df = pd.read_csv("./data/feature_total_f.csv", encoding="utf-8")
+    main_df = pd.read_csv("./data/main_total_no_features_f.csv", encoding="utf-8")
+    ingredient_df = pd.read_csv("./data/ingredient_total_id_f.csv", encoding="utf-8")
+    embedding_df = pd.read_csv("./data/embedding_f.csv", encoding="utf-8")
+    emoji_df = pd.read_csv("./data/emoji_selected_f.csv", encoding="utf-8")
+    food_df = pd.read_csv("./data/food_preprocessed_f.csv", encoding="utf-8-sig")
+    return feature_df, main_df, ingredient_df, embedding_df, emoji_df, food_df
+
+feature_df, main_df, ingredient_df, embedding_df, emoji_df, food_df = load_data()
+
+@st.cache_resource(show_spinner=None, experimental_allow_widgets=True)
+def embedding_c():
+    embeddings = [np.array(eval(embedding)).astype(float) for embedding in embedding_df["embeddings"].values]
+    stacked_embeddings = np.vstack(embeddings)
+
+    return stacked_embeddings
+
+stacked_embeddings = embedding_c()
+
+#STEP 3) 캐시 불러오고 임베딩 저장하기
+embedding_cache_path = "./data/recommendations_embeddings_cache.pkl"
+
+try:
+    embedding_cache = pd.read_pickle(embedding_cache_path)
+except FileNotFoundError:
+    embedding_cache = {}
+with open(embedding_cache_path, "wb") as embedding_cache_file:
+    pickle.dump(embedding_cache, embedding_cache_file)
+
+empty3, con2, empty4 = st.columns([0.3, 1.0, 0.3])
+@st.cache_resource(show_spinner=None, experimental_allow_widgets=True)
+def embedding_from_string(
+    string: str,
+    model: str = "text-embedding-ada-002",
+    embedding_cache=embedding_cache
+) -> list:
+    """Return embedding of given string, using a cache to avoid recomputing."""
+    if (string, model) not in embedding_cache.keys():
+        embedding_cache[(string, model)] = get_embedding(string, model)
+        with open(embedding_cache_path, "wb") as embedding_cache_file:
+            pickle.dump(embedding_cache, embedding_cache_file)
+    return embedding_cache[(string, model)]
+
+def generate_prompt(name, feature, situation_keyword, emotion_keyword):
+    prompt = f"""
+전통주 이름은 변경하지마세요.
+전통주의 특징을 먼저 서술하세요.
+그 다음, 상황 키워드와 감정 키워드를 넣어 전통주의 특징과 잘 어우러지게 추천 문구를 작성해 주세요.
+공백을 포함하여 200자 미만으로 작성해 주세요.
+구어체의 공손하고 친절한 존댓말로 작성해 주세요.
+
+예시)
+싱그러운 과일의 첫 맛과 바질로 마무리되는 끝 맛이 조화롭습니다. 
+긴 겨울 끝 어느새 성큼 다가오는 따스한 봄처럼 상큼한 과실주로 절로 미소를 짓게 만듭니다.
+축제, 파티, 그리고 기념일 같은 즐거운 시간을 더욱 풍성하게 채워줍니다.
+가족과 친구, 그리고 연인들과 함께하는 소중한 순간을 기념하고 축하하는데 딱 어울리며, 선물로도 좋습니다.
+
+예시)
+연한 핑크빛 스위트 와인으로, 장미향이 은은하게 나는 달콤한 디저트와인입니다.
+당도와 산도의 균형이 좋아 깔끔하고 단맛이 두드러지며, 주로 식전주나 식후주로 좋습니다.
+레드 다이아몬드의 색과 부드러운 포도향이 매력적입니다.
+떫은 맛, 타닌감, 산미는 적지만 잘 익은 포도의 맛 하나로 충분히 풍부한 맛을 느낄 수 있습니다.
+---
+전통주 이름: {name}
+전통주 특징: {feature}
+상황 키워드: {situation_keyword}
+감정 키워드: {emotion_keyword}
+---
+"""
+    return prompt
+
+def request_chat_completion(prompt):
+    response = openai.ChatCompletion.create(
+    model="gpt-3.5-turbo-0613",
+    messages=[
+        {"role": "system", "content": "당신은 글을 잘 쓰는 유능한 술 홍보 전문가입니다."},
     chart_from_c는 유능한 홍보 전문가입니다."},
-        {"role": "user", "content": prompt}
-    ],
-    stream=True
-)
-    return response
 
 def process_generated_text(streaming_resp: Generator[OpenAIObject, None, None]) -> str:
     report = []
