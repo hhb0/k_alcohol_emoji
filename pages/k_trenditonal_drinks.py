@@ -93,9 +93,8 @@ except FileNotFoundError:
 with open(embedding_cache_path, "wb") as embedding_cache_file:
     pickle.dump(embedding_cache, embedding_cache_file)
 
-
-@st.cache_resource(show_spinner=None, experimental_allow_widgets=True)
 empty3, con2, empty4 = st.columns([0.3, 1.0, 0.3])
+@st.cache_resource(show_spinner=None, experimental_allow_widgets=True)
 def embedding_from_string(
     string: str,
     model: str = "text-embedding-ada-002",
