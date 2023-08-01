@@ -331,7 +331,7 @@ with st.container():  # 외부 컨테이너
             empty7, pro, empty9 = st.columns([0.3, 1.0, 0.3])
             with pro:
                 with st.spinner('당신을 위한 전통주를 찾고 있습니다...🔍'):
-                    situation_keyword, emotion_keyword, result_query, name_id = get_result(situation=situation, emotion=emotion, food=food,
+                    situation_keyword, emotion_keyword, ingredient_keyword, result_query, name_id = get_result(situation=situation, emotion=emotion, food=food,
                                                                     ingredient=ingredient, alcohol=alcohol)
                     time.sleep(5)
                     if not name_id:
