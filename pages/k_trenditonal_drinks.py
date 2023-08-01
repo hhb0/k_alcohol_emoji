@@ -131,14 +131,21 @@ def generate_prompt(name, feature, situation_keyword, emotion_keyword):
 
 @st.cache_resource(show_spinner=None)
 def request_chat_completion(prompt):
-    response = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo-0613",
-        messages=[
-            {"role": "system", "content": "당신은 유능한 홍보 전문가입니다."},
-            {"role": "user", "content": prompt}
-        ]
-    )
-    return response["choices"][0]["message"]["content"]
+    streaming_response = openai.ChatCompletion.create(
+    model=openai_model_version,
+    messages=[
+        {"role": "system", "content": "당신은 유능한 홍보 전문가입니다."},
+        {"role": "user", "content": prompt}
+    ],
+    stream=True
+)
+    for resp in streaming_resp:
+        delta = resp.choices[0]["delta"]
+        if "content" in delta:
+            report.append(delta["content"])
+            res_box.markdown("".join(report).strip())
+        else:
+            break
 
 @st.cache_resource(show_spinner=None)
 def get_idx_emoji(input_query, alcohol_min, alcohol_max):
