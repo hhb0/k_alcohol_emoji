@@ -287,7 +287,7 @@ with con2:
         with empty11:
             st.empty()
 
-        empty13, col_a, empty16, col_n, empty14= st.columns([0.05, 0.5, 0.2, 0.5, 0.05])
+        empty13, col_a, empty16, col_n, empty14= st.columns([0.05, 0.5, 0.2, 0.5, 0.5])
         with empty13:
             st.empty()
         with col_a:
@@ -298,7 +298,7 @@ with con2:
             real_name = st.text_input('이름 (선택)', placeholder="이름 또는 닉네임을 입력해주세요.")
         with empty14:
             st.empty()
-            submitted = st.form_submit_button("제출하기기")
+            submitted = st.form_submit_button("제출하기")
 
 with st.container():  # 외부 컨테이너
     empty1, image_c, text_c, empty2 = st.columns([0.3, 0.3, 0.5, 0.3])
