@@ -92,8 +92,7 @@ except FileNotFoundError:
 with open(embedding_cache_path, "wb") as embedding_cache_file:
     pickle.dump(embedding_cache, embedding_cache_file)
 
-
- empty20,empty21,empty22,empty23,empty24,empty25,empty26= st.columns(7)
+empty20,empty21,empty22,empty23,empty24,empty25,empty26= st.columns(7)
 
 @st.cache_resource(show_spinner=None)
 def local_css(file_name):
