@@ -74,7 +74,7 @@ def load_data():
 
 feature_df, main_df, ingredient_df, embedding_df, emoji_df, food_df = load_data()
 
-@st.cache_resource(show_spinner=None, experimental_allow_widgets=True)
+
 def embedding_c():
     embeddings = [np.array(eval(embedding)).astype(float) for embedding in embedding_df["embeddings"].values]
     stacked_embeddings = np.vstack(embeddings)
@@ -96,7 +96,6 @@ with open(embedding_cache_path, "wb") as embedding_cache_file:
 
 
 empty3, con2, empty4 = st.columns([0.3, 1.0, 0.3])
-@st.cache_resource(show_spinner=None, experimental_allow_widgets=True)
 def embedding_from_string(
     string: str,
     model: str = "text-embedding-ada-002",
@@ -109,7 +108,6 @@ def embedding_from_string(
             pickle.dump(embedding_cache, embedding_cache_file)
     return embedding_cache[(string, model)]
 
-@st.cache_resource(show_spinner=None, experimental_allow_widgets=True)
 def generate_prompt(name, feature, situation_keyword, emotion_keyword):
     prompt = f"""
 전통주 이름은 변경하지마세요.
@@ -133,7 +131,6 @@ def generate_prompt(name, feature, situation_keyword, emotion_keyword):
 """
     return prompt
 
-@st.cache_resource(show_spinner=None, experimental_allow_widgets=True)
 def request_chat_completion(prompt):
     response = openai.ChatCompletion.create(
     model="gpt-3.5-turbo-0613",
@@ -158,7 +155,6 @@ def process_generated_text(streaming_resp: Generator[OpenAIObject, None, None]) 
     result = "".join(report).strip()
     return result
 
-@st.cache_resource(show_spinner=None, experimental_allow_widgets=True)
 def get_idx_emoji(input_query, alcohol_min, alcohol_max):
     # 입력받은 쿼리 임베딩
     input_query_embedding = embedding_from_string(input_query, model=EMBEDDING_MODEL)
@@ -192,7 +188,6 @@ def get_idx_emoji(input_query, alcohol_min, alcohol_max):
 
     return idx_list, alcohol_limited_list
 
-@st.cache_resource(show_spinner=None, experimental_allow_widgets=True)
 def get_result(
         emotion: str,
         situation: str,
@@ -239,8 +234,6 @@ def get_result(
 
     return situation_keyword.split(",")[0], emotion_keyword.split(",")[0], result_query, name_id
 
-
-@st.cache_resource(show_spinner=None, experimental_allow_widgets=True)
 def get_embedding(text, model="text-embedding-ada-002"):
     text = text.replace("\n", " ")
     return openai.Embedding.create(input=[text], model=model)['data'][0]['embedding']
