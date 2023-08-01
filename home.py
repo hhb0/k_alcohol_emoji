@@ -97,16 +97,8 @@ with open(embedding_cache_path, "wb") as embedding_cache_file:
     pickle.dump(embedding_cache, embedding_cache_file)
 
 e1, e3, con1, e4, e2 = st.columns(5)
-with e1:
-    st.image("./f_image/empty.png")
-with e3:
-    st.image("./f_image/empty.png")
 with con1:
     local_css("./button_style.css")
     want_to_contribute = st.button("나만의 전통주 찾기")
     if want_to_contribute:
         switch_page("k_trenditonal_drinks")
-with e4:
-    st.image("./f_image/empty.png")
-with e2:
-    st.image("./f_image/empty.png")
