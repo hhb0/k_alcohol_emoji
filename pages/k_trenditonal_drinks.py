@@ -131,6 +131,7 @@ def generate_prompt(name, feature, situation_keyword, emotion_keyword, ingredien
 전통주 특징: {feature}
 상황 키워드: {situation_keyword}
 감정 키워드: {emotion_keyword}
+재료 키워드: {ingredient_keyword}
 ---
 """
     return prompt
