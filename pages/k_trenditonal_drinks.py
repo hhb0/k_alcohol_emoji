@@ -238,7 +238,7 @@ def get_result(
         print(feature_df[feature_df["name_id"] == name_id]["features"].to_string(index=False))
         print("---")
 
-    return situation_keyword.split(",")[0], emotion_keyword.split(",")[0], result_query, name_id
+    return situation_keyword.split(",")[0], emotion_keyword.split(",")[0], ingredient_keyword.split(",")[0], result_query, name_id
 
 def get_embedding(text, model="text-embedding-ada-002"):
     text = text.replace("\n", " ")
