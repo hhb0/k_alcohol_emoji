@@ -1,4 +1,5 @@
 from typing import List, Generator
+from openai.openai_object import OpenAIObject
 
 import streamlit as st
 st.set_page_config(
