@@ -1,0 +1,12 @@
+pip==23.2
+streamlit
+numpy
+pandas
+tqdm
+pyparsing
+openai
+supabase
+matplotlib
+plotly
+scipy
+scikit-learn
