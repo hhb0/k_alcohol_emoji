@@ -96,7 +96,7 @@ except FileNotFoundError:
 with open(embedding_cache_path, "wb") as embedding_cache_file:
     pickle.dump(embedding_cache, embedding_cache_file)
 
-e1, e3, con1, e2 = st.columns(4)
+e1, e3, con1, e4, e2 = st.columns(5)
 with e1:
     st.image("./f_image/empty.png")
 with e3:
@@ -106,5 +106,7 @@ with con1:
     want_to_contribute = st.button("나만의 전통주 찾기")
     if want_to_contribute:
         switch_page("k_trenditonal_drinks")
+with e4:
+    st.image("./f_image/empty.png")
 with e2:
     st.image("./f_image/empty.png")
