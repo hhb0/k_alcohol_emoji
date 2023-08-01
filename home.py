@@ -60,6 +60,10 @@ with container:
 
     with con1:
         st.image("./f_image/main_text.png")
+        local_css("./button_style.css")
+        want_to_contribute = st.button("나만의 전통주 찾기")
+        if want_to_contribute:
+            switch_page("k_trenditonal_drinks")
 
     with empty2:
         st.empty()
@@ -96,7 +100,3 @@ except FileNotFoundError:
 with open(embedding_cache_path, "wb") as embedding_cache_file:
     pickle.dump(embedding_cache, embedding_cache_file)
 
-local_css("./button_style.css")
-want_to_contribute = st.button("나만의 전통주 찾기")
-if want_to_contribute:
-    switch_page("k_trenditonal_drinks")
