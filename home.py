@@ -93,7 +93,7 @@ with open(embedding_cache_path, "wb") as embedding_cache_file:
     pickle.dump(embedding_cache, embedding_cache_file)
 
 
-empty5, con3, empty6 = st.columns([1.0, 0.35, 1.0])
+empty5, con3, empty6 = st.columns([1.0, 0.355, 1.0])
 with empty5:
     st.empty()
 
