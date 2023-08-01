@@ -139,6 +139,11 @@ def request_chat_completion(prompt):
     ],
     stream=True
 )
+    return response
+    
+def process_generated_text(streaming_resp: Generator[OpenAIObject, None, None]) -> str:
+    report = []
+    res_box = st.empty()
     for resp in streaming_resp:
         delta = resp.choices[0]["delta"]
         if "content" in delta:
@@ -146,8 +151,8 @@ def request_chat_completion(prompt):
             res_box.markdown("".join(report).strip())
         else:
             break
-            
-    return response["choices"][0]["message"]["content"]
+    result = "".join(report).strip()
+    return result
 
 @st.cache_resource(show_spinner=None)
 def get_idx_emoji(input_query, alcohol_min, alcohol_max):
@@ -351,8 +356,9 @@ with st.container():  # 외부 컨테이너
                                 st.write("🔸 특징 :")
                                 features = feature_df[feature_df["name_id"] == name_id]["features"].to_string(index=False)
                                 prompt = generate_prompt(name=alcohol_name, feature=features, situation_keyword=situation_keyword, emotion_keyword=emotion_keyword)
-                                response = request_chat_completion(prompt)
-                                st.write(f"{response}")
+                                streaming_resp = request_chat_completion(prompt)
+                                generated_text = process_generated_text(streaming_resp)
+                                st.write(f"{generated_text}")
                                 with_food = food_df[food_df["name_id"] == name_id]["food"].values[0]
                                 st.write(f"🔸 어울리는 음식 : {with_food}")
                                 if st.button('다시하기'):
