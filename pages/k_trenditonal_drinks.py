@@ -241,11 +241,12 @@ def image_name(name_id):
 input_container = None
 
 
-def write_propmt_result(emotion, situation, food, name_id):
-    supabase_client.table("results").insert(
+def write_propmt_result(emotion, situation, ingredient, food, name_id):
+    supabase_client.table("result").insert(
         {
             "emotion": emotion,
             "situation": situation,
+            "ingredient": ingredient,
             "food": food,
             "name_id": name_id,
         }
