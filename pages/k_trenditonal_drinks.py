@@ -132,7 +132,7 @@ def request_chat_completion(prompt):
     response = openai.ChatCompletion.create(
     model="gpt-3.5-turbo-0613",
     messages=[
-        {"role": "system", "content": "당신은 글을 잘 쓰는 유능한 술 홍보 전문가입니다."},
+        {"role": "system", "content": "당신은 글을 잘 쓰는 유능한 홍보 전문가입니다."},
         {"role": "user", "content": prompt}
     ],
     stream=True
