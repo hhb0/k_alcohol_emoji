@@ -54,16 +54,18 @@ def local_css(file_name):
 
 container = st.container()
 with container:
-    empty1, con1, empty2 = st.columns(3)
+    empty1, con1, empty2 = st.columns([0.3, 1.0, 0.3])
     with empty1:
         st.empty()
 
     with con1:
         st.image("./f_image/main_text.png")
-        local_css("./button_style.css")
-        want_to_contribute = st.button("나만의 전통주 찾기")
-        if want_to_contribute:
-            switch_page("k_trenditonal_drinks")
+        e1, e2, e3 = st.columns(3)
+        with e2:
+            local_css("./button_style.css")
+            want_to_contribute = st.button("나만의 전통주 찾기")
+            if want_to_contribute:
+                switch_page("k_trenditonal_drinks")
 
     with empty2:
         st.empty()
