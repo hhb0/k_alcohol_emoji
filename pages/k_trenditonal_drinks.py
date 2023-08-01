@@ -141,7 +141,6 @@ def request_chat_completion(prompt):
 )
     return response
 
-@st.cache_resource(show_spinner=None, experimental_allow_widgets=True)
 def process_generated_text(streaming_resp: Generator[OpenAIObject, None, None]) -> str:
     report = []
     res_box = st.empty()
@@ -239,7 +238,7 @@ def get_embedding(text, model="text-embedding-ada-002"):
     text = text.replace("\n", " ")
     return openai.Embedding.create(input=[text], model=model)['data'][0]['embedding']
 
-@st.cache_resource(show_spinner=None, experimental_allow_widgets=True)
+
 def image_name(name_id):
     directory = "./f_image/"
     matching_files = [file for file in os.listdir(directory) if name_id in file]
