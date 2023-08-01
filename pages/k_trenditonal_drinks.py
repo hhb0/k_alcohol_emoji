@@ -74,7 +74,7 @@ def load_data():
 
 feature_df, main_df, ingredient_df, embedding_df, emoji_df, food_df = load_data()
 
-
+@st.cache_resource(show_spinner=None, experimental_allow_widgets=True)
 def embedding_c():
     embeddings = [np.array(eval(embedding)).astype(float) for embedding in embedding_df["embeddings"].values]
     stacked_embeddings = np.vstack(embeddings)
@@ -94,7 +94,7 @@ with open(embedding_cache_path, "wb") as embedding_cache_file:
     pickle.dump(embedding_cache, embedding_cache_file)
 
 
-
+@st.cache_resource(show_spinner=None, experimental_allow_widgets=True)
 empty3, con2, empty4 = st.columns([0.3, 1.0, 0.3])
 def embedding_from_string(
     string: str,
@@ -141,7 +141,8 @@ def request_chat_completion(prompt):
     stream=True
 )
     return response
-    
+
+@st.cache_resource(show_spinner=None, experimental_allow_widgets=True)
 def process_generated_text(streaming_resp: Generator[OpenAIObject, None, None]) -> str:
     report = []
     res_box = st.empty()
@@ -155,6 +156,7 @@ def process_generated_text(streaming_resp: Generator[OpenAIObject, None, None]) 
     result = "".join(report).strip()
     return result
 
+@st.cache_resource(show_spinner=None, experimental_allow_widgets=True)
 def get_idx_emoji(input_query, alcohol_min, alcohol_max):
     # 입력받은 쿼리 임베딩
     input_query_embedding = embedding_from_string(input_query, model=EMBEDDING_MODEL)
@@ -251,7 +253,7 @@ def image_name(name_id):
 
 input_container = None
 
-
+@st.cache_resource(show_spinner=None, experimental_allow_widgets=True)
 def write_propmt_result(emotion, situation, ingredient, food, name_id):
     supabase_client.table("result").insert(
         {
