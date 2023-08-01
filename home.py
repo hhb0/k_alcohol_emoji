@@ -96,9 +96,7 @@ except FileNotFoundError:
 with open(embedding_cache_path, "wb") as embedding_cache_file:
     pickle.dump(embedding_cache, embedding_cache_file)
 
-e1, e3, con1, e4, e2 = st.columns(5)
-with con1:
-    local_css("./button_style.css")
-    want_to_contribute = st.button("나만의 전통주 찾기")
-    if want_to_contribute:
-        switch_page("k_trenditonal_drinks")
+local_css("./button_style.css")
+want_to_contribute = st.button("나만의 전통주 찾기")
+if want_to_contribute:
+    switch_page("k_trenditonal_drinks")
