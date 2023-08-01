@@ -93,20 +93,15 @@ with open(embedding_cache_path, "wb") as embedding_cache_file:
     pickle.dump(embedding_cache, embedding_cache_file)
 
 
-empty5, con3, empty6 = st.columns([1.0, 0.5, 1.0])
-with empty5:
-    st.empty()
+ empty20,empty21,empty22,empty23,empty24,empty25,empty26= st.columns(7)
 
 @st.cache_resource(show_spinner=None)
 def local_css(file_name):
     with open(file_name) as f:
         st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
 
-with con3:
+with empty23:
     local_css("./button_style.css")
     want_to_contribute = st.button("나만의 전통주 찾기")
     if want_to_contribute:
         switch_page("k_trenditonal_drinks")
-
-with empty6:
-    st.empty()
