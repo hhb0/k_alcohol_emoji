@@ -92,7 +92,7 @@ except FileNotFoundError:
 with open(embedding_cache_path, "wb") as embedding_cache_file:
     pickle.dump(embedding_cache, embedding_cache_file)
 
-empty20,empty21,empty22= st.columns(3)
+empty20,empty21,empty22,empty23,empty24= st.columns(5)
 
 @st.cache_resource(show_spinner=None)
 def local_css(file_name):
@@ -101,9 +101,13 @@ def local_css(file_name):
 with empty20:
     st.empty()
 with empty21:
+    st.empty()
+with empty22:
     local_css("./button_style.css")
     want_to_contribute = st.button("나만의 전통주 찾기")
     if want_to_contribute:
         switch_page("k_trenditonal_drinks")
 with empty22:
+    st.empty()
+with empty23:
     st.empty()
