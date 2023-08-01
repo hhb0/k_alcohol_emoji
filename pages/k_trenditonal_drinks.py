@@ -107,14 +107,12 @@ def embedding_from_string(
             pickle.dump(embedding_cache, embedding_cache_file)
     return embedding_cache[(string, model)]
 
-def generate_prompt(name, feature, situation_keyword, emotion_keyword):
+def generate_prompt(name, feature, situation_keyword, emotion_keyword, ingredient_keyword):
     prompt = f"""
 전통주 이름은 변경하지마세요.
 상황 키워드와 감정 키워드를 포함하여 전통주의 특징을 패러프레이징하여 추천해 주세요.
-추천에 재료, 맛, 향을 강조해 주세요.
 공백을 포함하여 200자 미만으로 작성해 주세요.
 구어체의 공손하고 친절한 존댓말로 작성해 주세요.
-
 
 예시)
 싱그러운 과일의 첫 맛과 바질로 마무리되는 끝 맛이 조화롭습니다. 
@@ -141,7 +139,7 @@ def request_chat_completion(prompt):
     response = openai.ChatCompletion.create(
     model="gpt-3.5-turbo-0613",
     messages=[
-        {"role": "system", "content": "당신은 유능한 홍보 전문가입니다."},
+        {"role": "system", "content": "당신은 술을 잘 아는 유능한 홍보 전문가입니다."},
         {"role": "user", "content": prompt}
     ],
     stream=True
@@ -213,7 +211,7 @@ def get_result(
     food_keyword = emoji_df[emoji_df["sample"] == food]["k_keywords"].values[0]
 
     input_query = f"재료는 {ingredient_keyword}다. 어울리는 음식으로는 {food_keyword}가 있다. {situation_keyword}다. {emotion_keyword} 감정을 언급할 수 있다."  # 벡터 임베딩용 쿼리
-    result_query = f"{emotion}{situation}{food}"  # 출력용 쿼리
+    result_query = f"{emotion} {situation} {ingredient} {food}"  # 출력용 쿼리
 
     # 알콜 이모지 도수로 변환
     if alcohol == "⬆️":
@@ -359,7 +357,7 @@ with st.container():  # 외부 컨테이너
                                 st.write(f"🔸 도수 : {alcohol}")
                                 st.write("🔸 특징 :")
                                 features = feature_df[feature_df["name_id"] == name_id]["features"].to_string(index=False)
-                                prompt = generate_prompt(name=alcohol_name, feature=features, situation_keyword=situation_keyword, emotion_keyword=emotion_keyword)
+                                prompt = generate_prompt(name=alcohol_name, feature=features, situation_keyword=situation_keyword, emotion_keyword=emotion_keyword, ingredient_keyword=ingredient_keyword)
                                 streaming_resp = request_chat_completion(prompt)
                                 generated_text = process_generated_text(streaming_resp)
                                 with_food = food_df[food_df["name_id"] == name_id]["food"].values[0]
