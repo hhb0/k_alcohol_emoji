@@ -361,7 +361,6 @@ with st.container():  # 외부 컨테이너
                                 prompt = generate_prompt(name=alcohol_name, feature=features, situation_keyword=situation_keyword, emotion_keyword=emotion_keyword)
                                 streaming_resp = request_chat_completion(prompt)
                                 generated_text = process_generated_text(streaming_resp)
-                                st.write(f"{generated_text}")
                                 with_food = food_df[food_df["name_id"] == name_id]["food"].values[0]
                                 st.write(f"🔸 어울리는 음식 : {with_food}")
                                 if st.button('다시하기'):
