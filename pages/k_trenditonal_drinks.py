@@ -107,12 +107,11 @@ def embedding_from_string(
             pickle.dump(embedding_cache, embedding_cache_file)
     return embedding_cache[(string, model)]
 
-def generate_prompt(name, feature, situation_keyword, emotion_keyword, ingredient_keyword):
+def generate_prompt(name, feature, situation_keyword, emotion_keyword):
     prompt = f"""
 전통주 이름은 변경하지마세요.
 전통주의 특징을 2문장 정도로 패러프레이징 해주세요.
 상황 키워드와 감정 키워드를 넣어 추천 문구를 작성해 주세요.
-전통주의 특징에 재료 키워드가 있을 때만 재료 키워드를 언급해주세요.
 공백을 포함하여 200자 미만으로 작성해 주세요.
 구어체의 공손하고 친절한 존댓말로 작성해 주세요.
 
@@ -133,7 +132,6 @@ def generate_prompt(name, feature, situation_keyword, emotion_keyword, ingredien
 전통주 특징: {feature}
 상황 키워드: {situation_keyword}
 감정 키워드: {emotion_keyword}
-재료 키워드: {ingredient_keyword}
 ---
 """
     return prompt
@@ -360,7 +358,7 @@ with st.container():  # 외부 컨테이너
                                 st.write(f"🔸 도수 : {alcohol}")
                                 st.write("🔸 특징 :")
                                 features = feature_df[feature_df["name_id"] == name_id]["features"].to_string(index=False)
-                                prompt = generate_prompt(name=alcohol_name, feature=features, situation_keyword=situation_keyword, emotion_keyword=emotion_keyword, ingredient_keyword=ingredient_keyword)
+                                prompt = generate_prompt(name=alcohol_name, feature=features, situation_keyword=situation_keyword, emotion_keyword=emotion_keyword)
                                 streaming_resp = request_chat_completion(prompt)
                                 generated_text = process_generated_text(streaming_resp)
                                 with_food = food_df[food_df["name_id"] == name_id]["food"].values[0]
