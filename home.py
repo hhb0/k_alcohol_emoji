@@ -96,8 +96,10 @@ except FileNotFoundError:
 with open(embedding_cache_path, "wb") as embedding_cache_file:
     pickle.dump(embedding_cache, embedding_cache_file)
 
-e1, con1, e2 = st.columns(3)
+e1, e3, con1, e2 = st.columns(3)
 with e1:
+    st.image("./f_image/empty.png")
+with e3:
     st.image("./f_image/empty.png")
 with con1:
     local_css("./button_style.css")
