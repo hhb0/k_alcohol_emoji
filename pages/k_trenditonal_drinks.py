@@ -111,6 +111,7 @@ def generate_prompt(name, feature, situation_keyword, emotion_keyword):
     prompt = f"""
 전통주 이름은 변경하지마세요.
 상황 키워드와 감정 키워드를 포함하여 전통주의 특징을 패러프레이징하여 추천해 주세요.
+추천에 재료, 맛, 향을 강조해 주세요.
 공백을 포함하여 200자 미만으로 작성해 주세요.
 구어체의 공손하고 친절한 존댓말로 작성해 주세요.
 
