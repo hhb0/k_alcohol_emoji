@@ -121,11 +121,11 @@ def generate_prompt(name, feature, situation_keyword, emotion_keyword):
 축제, 파티, 그리고 기념일 같은 즐거운 시간을 더욱 풍성하게 채워줍니다.
 가족과 친구, 그리고 연인들과 함께하는 소중한 순간을 기념하고 축하하는데 딱 어울리며, 선물로도 좋습니다.
 
-예시)
 연한 핑크빛 스위트 와인으로, 장미향이 은은하게 나는 달콤한 디저트와인입니다.
 당도와 산도의 균형이 좋아 깔끔하고 단맛이 두드러지며, 주로 식전주나 식후주로 좋습니다.
 레드 다이아몬드의 색과 부드러운 포도향이 매력적입니다.
 떫은 맛, 타닌감, 산미는 적지만 잘 익은 포도의 맛 하나로 충분히 풍부한 맛을 느낄 수 있습니다.
+
 ---
 전통주 이름: {name}
 전통주 특징: {feature}
@@ -237,7 +237,7 @@ def get_result(
         print(feature_df[feature_df["name_id"] == name_id]["features"].to_string(index=False))
         print("---")
 
-    return situation_keyword.split(",")[0], emotion_keyword.split(",")[0], ingredient_keyword.split(",")[0], result_query, name_id
+    return situation_keyword.split(",")[0], emotion_keyword.split(",")[0],  result_query, name_id
 
 def get_embedding(text, model="text-embedding-ada-002"):
     text = text.replace("\n", " ")
@@ -330,7 +330,7 @@ with st.container():  # 외부 컨테이너
             empty7, pro, empty9 = st.columns([0.3, 1.0, 0.3])
             with pro:
                 with st.spinner('당신을 위한 전통주를 찾고 있습니다...🔍'):
-                    situation_keyword, emotion_keyword, ingredient_keyword, result_query, name_id = get_result(situation=situation, emotion=emotion, food=food,
+                    situation_keyword, emotion_keyword, result_query, name_id = get_result(situation=situation, emotion=emotion, food=food,
                                                                     ingredient=ingredient, alcohol=alcohol)
                     time.sleep(5)
                     if not name_id:
