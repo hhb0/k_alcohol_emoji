@@ -268,7 +268,6 @@ def image_name(name_id):
 
 input_container = None
 
-@st.cache_resource(show_spinner=None, experimental_allow_widgets=True)
 def write_propmt_result(emotion, situation, ingredient, food, name_id):
     supabase_client.table("result").insert(
         {
@@ -344,6 +343,7 @@ with st.container():  # 외부 컨테이너
                 with st.spinner('당신을 위한 전통주를 찾고 있습니다...🔍'):
                     situation_keyword, emotion_keyword, result_query, name_id = get_result(situation=situation, emotion=emotion, food=food,
                                                                     ingredient=ingredient, alcohol=alcohol)
+                    write_propmt_result(emotion=emotion, situation=situation, ingredient=ingredient, food=food, name_id=name_id)
                     time.sleep(5)
                     if not name_id:
                         st.warning("검색 결과가 없습니다.")
