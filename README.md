@@ -2,6 +2,8 @@
 K-Trenditional Drinks
 이모지로 보는 이 전통주 모지?
 
+### `k_alcohol: 감성 요인에 따른 전통주 맞춤형 추천`을 업그레이드
+
 [서비스 링크](https://k-trenditional-drinks.streamlit.app/)
 
 ## 1. 기획 의도
