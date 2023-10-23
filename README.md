@@ -1,7 +1,8 @@
 # k_alcohol_emoji
 K-Trenditional Drinks
 이모지로 보는 이 전통주 모지?
-[서비스 링크]([https://pages.github.com/](https://k-trenditional-drinks.streamlit.app/))
+
+[서비스 링크](https://k-trenditional-drinks.streamlit.app/)
 
 ## 1. 기획 의도
 **1. 전통주 인식**  
