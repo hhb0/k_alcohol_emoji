@@ -11,4 +11,3 @@ plotly
 scipy
 scikit-learn
 streamlit_extras
-openai.embeddings_utils
