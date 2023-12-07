@@ -1,6 +1,6 @@
 pip==23.2
 openai==0.28.1
-streamlit
+streamlit==1.24.0
 numpy
 pandas
 tqdm
