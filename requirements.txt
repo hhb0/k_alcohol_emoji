@@ -1,10 +1,10 @@
 pip==23.3.0
+openai==0.28.1
 streamlit
 numpy
 pandas
 tqdm
 pyparsing
-openai
 supabase
 matplotlib
 plotly
