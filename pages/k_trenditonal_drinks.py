@@ -1,4 +1,6 @@
 from typing import List, Generator
+import openai
+from openai.openai_object import OpenAIObject
 
 import streamlit as st
 st.set_page_config(
@@ -32,7 +34,6 @@ import numpy as np
 import pandas as pd
 from tqdm import tqdm
 tqdm.pandas()
-import openai
 import time
 import os
 openai.api_key = st.secrets.OPENAI_TOKEN
