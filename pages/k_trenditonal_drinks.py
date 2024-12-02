@@ -149,7 +149,7 @@ def generate_prompt(name, feature, situation_keyword, emotion_keyword):
 
 def request_chat_completion(prompt):
     response = openai.ChatCompletion.create(
-    model="gpt-3.5-turbo-0613",
+    model="gpt-3.5-turbo",
     messages=[
         {"role": "system", "content": "당신은 글을 잘 쓰는 유능한 홍보 전문가입니다."},
         {"role": "user", "content": prompt}
